@@ -4,7 +4,7 @@ Nauka działami i próbny egzamin z oficjalnych pytań na prawo jazdy. Strona ob
 
 ## GitHub Pages
 
-Gotowa strona znajduje się w `docs/`. W ustawieniach repozytorium **Settings → Pages → Build and deployment** wybierz **Deploy from a branch**, gałąź `main` i folder `/docs`. Po zapisaniu ustawień kolejne pushe do `main` publikują stronę automatycznie.
+Strona działa pod adresem [mod-it.games/prawko/](https://mod-it.games/prawko/). GitHub Pages publikuje gałąź `main` z katalogu `/(root)`. Import generuje stronę startową `index.html` i pliki aplikacji w `docs/`.
 
 Podgląd lokalny gotowego eksportu:
 
@@ -30,7 +30,7 @@ Import przygotowuje zdjęcia WebP oraz filmy MP4/H.264, sprawdza pulę egzaminac
 Po sprawdzeniu zmian:
 
 ```sh
-git add docs
+git add index.html docs
 git commit -m "Zaktualizuj katalog pytań"
 git push
 ```

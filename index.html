@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151d2e">
+  <meta name="description" content="Nauka pytań na prawo jazdy i próbne egzaminy dla wszystkich kategorii z teorią.">
+  <title>Prawko — nauka i próbny egzamin</title>
+  <link rel="stylesheet" href="docs/styles.css">
+  <script type="module" src="docs/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <button class="brand" type="button" data-page="home">
+        <span class="brand-symbol" aria-hidden="true"></span><span>Prawko</span>
+      </button>
+      <nav aria-label="Menu główne">
+        <button data-page="home" aria-current="page"><span class="nav-icon" aria-hidden="true">⌂</span> Start</button>
+        <button data-page="study"><span class="nav-icon" aria-hidden="true">▤</span> Nauka</button>
+        <button data-page="exam"><span class="nav-icon" aria-hidden="true">◷</span> Próbny egzamin</button>
+      </nav>
+      <div class="sidebar-footer">
+        <p id="version">Wczytywanie katalogu…</p>
+        <a id="source" href="https://www.gov.pl/web/infrastruktura/jak-uzyskac-prawo-jazdy#pytania-egzaminacyjne-na-prawo-jazdy">Katalog Ministerstwa Infrastruktury</a>
+        <a id="credits" href="https://www.gov.pl/web/infrastruktura/ponowne-wykorzystanie-informacji-sektora-publicznego">Warunki wykorzystania materiałów</a>
+      </div>
+    </aside>
+    <main id="main" tabindex="-1">
+      <div class="topbar">
+        <p id="section">Start</p>
+        <label id="category-field" class="category">Kategoria <select id="category" disabled aria-label="Kategoria prawa jazdy"></select></label>
+      </div>
+      <div id="screen" class="screen">
+        <p class="panel" role="status">Wczytywanie pytań…</p>
+        <noscript>Włącz JavaScript, aby korzystać z nauki i próbnego egzaminu.</noscript>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -422,6 +422,13 @@ def run(args, *, pages_cache=None, previous_data=None, audit_path=None):
     return report
 
 
+def write_pages_entry():
+    html = (ROOT / "docs/index.html").read_text(encoding="utf-8")
+    html = html.replace('href="styles.css"', 'href="docs/styles.css"')
+    html = html.replace('src="app.mjs"', 'src="docs/app.mjs"')
+    atomic_write(ROOT / "index.html", html.encode())
+
+
 def export_pages(args):
     if not (shutil.which("magick") or shutil.which("convert")):
         raise ValueError("Eksport Pages wymaga ImageMagick dostępnego w PATH.")
@@ -453,6 +460,8 @@ def export_pages(args):
             if previous.exists():
                 previous.rename(output)
             raise
+    if output == ROOT / "docs":
+        write_pages_entry()
     print(f"GitHub Pages: {output} | {size / 1_000_000:.1f} MB | {report['mediaFiles']} multimediów", flush=True)
 
 

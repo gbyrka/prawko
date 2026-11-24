@@ -155,7 +155,7 @@ function mediaNode(media, { controlled = true, eager = false } = {}) {
     element.alt = "Materiał ilustracyjny do pytania";
     element.decoding = "async";
   }
-  element.src = `media/${encodeURIComponent(media.file)}`;
+  element.src = new URL(`media/${encodeURIComponent(media.file)}`, import.meta.url).href;
   return element;
 }
 
@@ -596,11 +596,11 @@ screen.addEventListener("click", event => {
 });
 
 async function loadCatalog() {
-  const pointer = await fetch("data/current.json", { cache: "no-store" });
+  const pointer = await fetch(new URL("data/current.json", import.meta.url), { cache: "no-store" });
   if (!pointer.ok) throw new Error("No active catalog");
   const { catalog: file } = await pointer.json();
   if (!/^catalog-[a-f0-9]{16}\.json$/.test(file)) throw new Error("Invalid catalog path");
-  const response = await fetch(`data/${file}`);
+  const response = await fetch(new URL(`data/${file}`, import.meta.url));
   if (!response.ok) throw new Error("Catalog unavailable");
   const contents = await response.json();
   contents.byId = new Map(contents.questions.map(q => [q.id, q]));
