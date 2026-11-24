@@ -8,6 +8,7 @@
   <title>Prawko — nauka i próbny egzamin</title>
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="app.mjs"></script>
+  <script type="module" src="analytics.mjs"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Przejdź do treści</a>
@@ -25,6 +26,8 @@
         <p id="version">Wczytywanie katalogu…</p>
         <a id="source" href="https://www.gov.pl/web/infrastruktura/jak-uzyskac-prawo-jazdy#pytania-egzaminacyjne-na-prawo-jazdy">Katalog Ministerstwa Infrastruktury</a>
         <a id="credits" href="https://www.gov.pl/web/infrastruktura/ponowne-wykorzystanie-informacji-sektora-publicznego">Warunki wykorzystania materiałów</a>
+        <a href="privacy.html">Polityka prywatności</a>
+        <button type="button" id="analytics-settings" aria-controls="analytics-consent" aria-expanded="false" hidden>Ustawienia prywatności</button>
         <p>Autor aplikacji</p>
         <a href="https://www.linkedin.com/in/grzegorz-byrka-81175515/">Grzegorz Byrka · LinkedIn</a>
       </div>
@@ -34,6 +37,14 @@
         <p id="section">Start</p>
         <label id="category-field" class="category">Kategoria <select id="category" disabled aria-label="Kategoria prawa jazdy"></select></label>
       </div>
+      <section class="analytics-consent" id="analytics-consent" aria-labelledby="analytics-title" hidden>
+        <h2 id="analytics-title" tabindex="-1">Opcjonalne statystyki odwiedzin</h2>
+        <p>Google Analytics pomaga nam mierzyć ruch na stronie. Możesz korzystać z Prawko niezależnie od wyboru. <a href="privacy.html">Więcej o prywatności</a></p>
+        <div class="actions">
+          <button type="button" class="button" id="analytics-reject">Odrzuć analitykę</button>
+          <button type="button" class="button" id="analytics-accept">Zezwól na analitykę</button>
+        </div>
+      </section>
       <div id="screen" class="screen">
         <p class="panel" role="status">Wczytywanie pytań…</p>
         <noscript>Włącz JavaScript, aby korzystać z nauki i próbnego egzaminu.</noscript>

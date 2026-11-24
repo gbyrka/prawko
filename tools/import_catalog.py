@@ -426,6 +426,8 @@ def write_pages_entry():
     html = (ROOT / "docs/index.html").read_text(encoding="utf-8")
     html = html.replace('href="styles.css"', 'href="docs/styles.css"')
     html = html.replace('src="app.mjs"', 'src="docs/app.mjs"')
+    html = html.replace('src="analytics.mjs"', 'src="docs/analytics.mjs"')
+    html = html.replace('href="privacy.html"', 'href="docs/privacy.html"')
     atomic_write(ROOT / "index.html", html.encode())
 
 
@@ -445,7 +447,7 @@ def export_pages(args):
         args.output, args.activate = stage, True
         report = run(args, pages_cache=cache, previous_data=output / "data",
                      audit_path=cache.parent / "pages-report.json")
-        for filename in ("index.html", "app.mjs", "exam.mjs", "styles.css"):
+        for filename in ("index.html", "app.mjs", "exam.mjs", "styles.css", "analytics.mjs", "privacy.html"):
             shutil.copyfile(ROOT / "public" / filename, stage / filename)
         (stage / ".nojekyll").touch()
         size = sum(f.stat().st_size for f in stage.rglob("*") if f.is_file())

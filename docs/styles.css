@@ -140,3 +140,25 @@ dialog::backdrop { background: #14213a90; }
 .sidebar-footer a { display: block; margin-bottom: .45rem; }
 .result-actions { margin-top: 1rem; }
 @media (max-width: 690px) { .sidebar-footer a { margin-bottom: 0; } }
+
+#analytics-settings {
+  margin: 0 0 .6rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #b9c8eb;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  text-align: left;
+}
+.analytics-consent {
+  margin: 1rem clamp(1.25rem, 4vw, 3.75rem) 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--edge);
+  border-radius: .75rem;
+  background: var(--paper);
+}
+.analytics-consent p { margin: .4rem 0 .85rem; }
+.privacy-page { max-width: 54rem; }
+.privacy-page section { margin-top: 2rem; }
+.privacy-page li { margin: .6rem 0; line-height: 1.55; }
