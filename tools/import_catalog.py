@@ -447,7 +447,7 @@ def export_pages(args):
         args.output, args.activate = stage, True
         report = run(args, pages_cache=cache, previous_data=output / "data",
                      audit_path=cache.parent / "pages-report.json")
-        for filename in ("index.html", "app.mjs", "exam.mjs", "styles.css", "analytics.mjs", "privacy.html"):
+        for filename in ("index.html", "app.mjs", "exam.mjs", "styles.css", "analytics.mjs", "privacy.html", "prawko-og.jpg"):
             shutil.copyfile(ROOT / "public" / filename, stage / filename)
         (stage / ".nojekyll").touch()
         size = sum(f.stat().st_size for f in stage.rglob("*") if f.is_file())
