@@ -344,13 +344,17 @@ function renderExamQuestion() {
       <span id="phase-label" role="status"></span>
       <span class="clock" id="question-time" role="timer" aria-label="Czas tej części pytania"></span>
     </div>
-    ${choicesMarkup(question, basic)}
+    ${choicesMarkup(question)}
     <div class="actions">
-      ${button(question.media?.type === "video" ? "Odtwórz film" : "Przejdź do odpowiedzi", "start-answer", { primary: true })}
+      ${button("Odtwórz film", "start-answer")}
       ${button(index === questions.length - 1 ? "Wyświetl wynik" : "Następne pytanie", "next-exam", { primary: true })}
     </div>
     <p class="notice" id="exam-media-error" role="status" hidden></p>
   </article>
+  <dialog id="skip-dialog" aria-labelledby="skip-heading"><h2 id="skip-heading">Nie zaznaczono odpowiedzi</h2>
+    <p>Jeśli pominiesz to pytanie, otrzymasz za nie 0 punktów.</p>
+    <div class="actions">${button("Wróć do pytania", "cancel-skip-exam")}${button("Pomiń pytanie", "confirm-skip-exam")}</div>
+  </dialog>
   <dialog id="end-dialog" aria-labelledby="end-heading"><h2 id="end-heading">Zakończyć egzamin?</h2>
     <p>Za pominięte pytania otrzymasz 0 punktów.</p>
     <div class="actions">${button("Wróć do pytania", "cancel-end-exam")}${button("Zakończ egzamin", "confirm-end-exam", { primary: true })}</div>
@@ -385,10 +389,7 @@ function syncPhase() {
   }[phase];
   screen.querySelector("#question-time").hidden = phase === "playing";
   const start = screen.querySelector('[data-action="start-answer"]');
-  const next = screen.querySelector('[data-action="next-exam"]');
-  start.hidden = phase !== "reading";
-  next.hidden = phase !== "answering";
-  for (const option of screen.querySelectorAll(".answer")) option.disabled = phase !== "answering";
+  start.hidden = phase !== "reading" || exam.questions[exam.index].media?.type !== "video";
   updateClock();
 }
 
@@ -447,7 +448,7 @@ function startAnswer() {
 }
 
 function examNext() {
-  if (!exam || exam.phase !== "answering") return;
+  if (!exam) return;
   exam.media?.pause?.();
   if (++exam.index === exam.questions.length) finishExam();
   else renderExamQuestion();
@@ -567,7 +568,8 @@ screen.addEventListener("click", event => {
   if (!target || target.disabled) return;
   const { action, value } = target.dataset;
   if (exam && Date.now() >= exam.deadline && action !== "cancel-end-exam") { finishExam(); return; }
-  if (exam && ["choose", "next-exam", "start-answer"].includes(action) && Date.now() >= exam.phaseDeadline) {
+  if (exam?.phase === "answering" && ["choose", "next-exam", "confirm-skip-exam"].includes(action)
+      && Date.now() >= exam.phaseDeadline) {
     tickExam();
     return;
   }
@@ -580,12 +582,17 @@ screen.addEventListener("click", event => {
     case "next-study": studyNext(); break;
     case "start-exam": startExam(); break;
     case "start-answer": startAnswer(); break;
-    case "next-exam": examNext(); break;
+    case "next-exam":
+      if (exam.answers[exam.index] == null) screen.querySelector("#skip-dialog").showModal();
+      else examNext();
+      break;
+    case "cancel-skip-exam": screen.querySelector("#skip-dialog").close(); break;
+    case "confirm-skip-exam": examNext(); break;
     case "ask-end-exam": screen.querySelector("#end-dialog").showModal(); break;
     case "cancel-end-exam": screen.querySelector("#end-dialog").close(); break;
     case "confirm-end-exam": finishExam(); break;
     case "choose":
-      if (exam?.phase === "answering") exam.answers[exam.index] = value;
+      if (exam) exam.answers[exam.index] = value;
       else if (page === "study" && study && !study.checked) {
         study.answer = value;
         screen.querySelector('[data-action="check-study"]').disabled = false;
